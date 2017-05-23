@@ -5,6 +5,8 @@ var bookRouter = express.Router();
 var books = require('../client/src/models/books')();
 var book = require('../client/src/models/book');
 var Review = require('../client/src/models/review');
+var BookQuery = require('../db/bookQuery.js');
+var query = new BookQuery();
 
 
 bookRouter.get('/:id', function(req, res){
@@ -13,7 +15,9 @@ bookRouter.get('/:id', function(req, res){
 
 
 bookRouter.get('/', function(req, res) {
-  res.json(books);
+  query.all(function(books){
+    res.json(books);
+  })
 });
 
 
@@ -32,8 +36,12 @@ bookRouter.post('/', function(req, res) {
     title: req.body.title,
     author: req.body.author 
   });
-  books.push(book);
-  res.json({data: books});
+  query.add(book,function(results){
+    res.json(results);
+
+  })
+
+  
 });
 
 

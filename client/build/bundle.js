@@ -61,8 +61,13 @@
 	
 	var UI = function() {
 	  var books = new Books();
-	  this.render(books);
-	}
+	  books.all(function(books){
+	     this.render(books);  
+	    }.bind(this));
+	
+	    this.createForm();
+	
+	  }
 	
 	UI.prototype = {
 	  createText: function(text, label) {
@@ -79,16 +84,16 @@
 	  createReview: function(li, review) {
 	    this.appendText(li, review.comment, 'Comment: ');
 	    this.appendText(li, review.rating, 'Rating: ');
-	    this.appendText(li, review.author, 'Author: ');
+	    
 	  },
 	
 	  render: function(books) {
 	    var container = document.getElementById('books');
-	
+	       container.innerHTML = "";
 	    for (var book of books) {
 	      var li = document.createElement('li');
 	      this.appendText(li, book.title, 'Book: ');
-	      
+	      this.appendText(li, book.author, 'Author: ');
 	      
 	      for (var review of book.reviews){
 	        this.createReview(li, review);
@@ -96,8 +101,51 @@
 	
 	      container.appendChild(li);
 	    }
+	  },
+	    createForm: function(){  //ADDED
+	          //create the form and a div
+	          var div = document.createElement('div');
+	          var form = document.createElement('form');
+	          var body = document.querySelector('body');
+	        
+	          //append input boxes to the form
+	          var titleInput = document.createElement('input');
+	          titleInput.setAttribute("name", "title");
+	          form.appendChild(titleInput);
+	        
+	          
+	        
+	          var authorInput = document.createElement('input');
+	          authorInput.setAttribute("name", "author");
+	          form.appendChild(authorInput);
+	        
+	          //append a button to submit the form
+	          var button = document.createElement('button');
+	          button.type = 'submit';
+	          button.innerText = 'Add Book';
+	          form.appendChild(button);
+	        
+	          //add event handler to the onSubmit event of the form
+	          form.onsubmit = function(e){
+	            e.preventDefault();
+	            var newFilm = {
+	              title: e.target.title.value,
+	              
+	              author: e.target.author.value.split(',')
+	            }
+	        
+	            var books = new Books(); 
+	            books.add(newBook, function(data){
+	              console.log(data);
+	            });
+	        
+	          }
+	        
+	          div.appendChild(form);
+	          body.insertBefore( div, body.firstChild );
+	        }
 	  }
-	}
+	
 	
 	module.exports = UI;
 
