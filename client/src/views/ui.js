@@ -56,9 +56,9 @@ UI.prototype = {
         
           
         
-          var authorInput = document.createElement('input');
-          authorInput.setAttribute("name", "author");
-          form.appendChild(authorInput);
+          var authorsInput = document.createElement('input');
+          authorsInput.setAttribute("name", "author");
+          form.appendChild(authorsInput);
         
           //append a button to submit the form
           var button = document.createElement('button');
@@ -69,14 +69,14 @@ UI.prototype = {
           //add event handler to the onSubmit event of the form
           form.onsubmit = function(e){
             e.preventDefault();
-            var newFilm = {
+            var newBook = {
               title: e.target.title.value,
               
               author: e.target.author.value.split(',')
             }
         
             var books = new Books(); 
-            books.add(newBook, function(data){
+             books.add(newBook, function(data){
               console.log(data);
             });
         

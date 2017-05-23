@@ -3,7 +3,7 @@ var app = express();
 var bookRouter = express.Router();
 
 var books = require('../client/src/models/books')();
-var book = require('../client/src/models/book');
+var Book = require('../client/src/models/book');
 var Review = require('../client/src/models/review');
 var BookQuery = require('../db/bookQuery.js');
 var query = new BookQuery();
