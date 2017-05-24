@@ -57,7 +57,7 @@ UI.prototype = {
           
         
           var authorsInput = document.createElement('input');
-          authorsInput.setAttribute("name", "author");
+          authorsInput.setAttribute("name", "authors");
           form.appendChild(authorsInput);
         
           //append a button to submit the form
@@ -72,15 +72,15 @@ UI.prototype = {
             var newBook = {
               title: e.target.title.value,
               
-              author: e.target.author.value.split(',')
+              authors: e.target.authors.value.split(',')
             }
         
             var books = new Books(); 
+
              books.add(newBook, function(data){
-              console.log(data);
-            });
-        
-          }
+                 this.render(data);
+               }.bind(this));
+             }.bind(this)
         
           div.appendChild(form);
           body.insertBefore( div, body.firstChild );
